@@ -110,7 +110,7 @@ export const RoomCreationPopUpComponent = () => {
                         <div className='RoomCreationPopUpData'>
                             <div className='RoomCreationPopUpInput'>
                                 <label>Room Name:</label>
-                                <input type='text' placeholder='Room Name' value={RoomName} onChange={(e) => SetRoomName(e.target.value)}/>
+                                <input type='text' placeholder='Room Name' maxLength={15} value={RoomName} onChange={(e) => SetRoomName(e.target.value)}/>
                             </div>
                             <div className='RoomCreationPopUpButton'>
                                 <button onClick={setisRoomPublicFunc}>Public&nbsp;&nbsp;&nbsp;&nbsp;Private</button>
@@ -121,7 +121,7 @@ export const RoomCreationPopUpComponent = () => {
 
                                 <div className='RoomCreationPopUpPasswordInput'>
                                     <label>Room Pass:</label>
-                                    <input type='text' placeholder='Room Password' value={RoomPassword} onChange={(e) => SetRoomPassword(e.target.value)}/>
+                                    <input type='text' placeholder='Room Password' maxLength={15} value={RoomPassword} onChange={(e) => SetRoomPassword(e.target.value)}/>
                                 </div>
                             )}
                         </div>

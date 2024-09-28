@@ -8,6 +8,7 @@ body {
   color: #1A5319;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -34,10 +35,55 @@ code {
   align-items: center;
 }
 .MainBackground button{
-  background-color: #80AF81 !important;
+  background-color: #80AF81 ;
 }
 .MainBackground button:hover{
   background-color: #777e78 !important;
+}
+.corneruserauth{
+  position: absolute;
+  height: 50%;
+  width: 50%;
+  top: 5px;
+  left: 30px;
+}
+.MainAuth{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  width: 60%;
+  height: 75%;
+}
+.Header{
+  margin-top: 0%;
+  font-size: 1.6em;
+  font-weight: 900;
+}
+.Auth{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  gap: 30px;
+}
+.Auth button{
+  width: 200px;
+  height: 40px;
+  border: none;
+  background-color: #80AF81;
+  padding: 5px;
+  border-radius: 8px;
+  font-weight: bolder;
+  font-size: 1em;
+  color: #1A5319;
+}
+.Auth button:hover{
+  transition: all 0.5s;
+  background-color: #1A5319;
+  color: #80AF81;
 }
 .SideTab{
   background-color: #80AF81;
@@ -58,7 +104,7 @@ code {
   height: 40px;
   font-weight: 900;
   border-radius: 8px;
-  background-color: #1A5319;
+  background-color: #80AF81 ;
   color: #D6EFD8;
   border: none;
 }
@@ -99,7 +145,7 @@ code {
   height: 35px;
   border-radius: 8px;
   border: none;
-  background-color: rgb(231, 199, 199);
+  background-color: #80AF81 ;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -178,35 +224,47 @@ code {
 .ChatTabHeader {
   background-color: #80AF81;
   display: flex;
-  justify-content: space-evenly;
-  gap: 80%;
+  justify-content: space-between;
   align-items: center;
   width: 100%; /* Reduces width to add space */
   height: 7.5%;
   border-top-right-radius: 10px;
   border-bottom: 2px solid #1A5319;
 }
+.ChatTabHeader h1{
+  margin-left: 10px;
+}
 .ChatTabHeader button{
   width: 40px;
   height: 40px;
   border-radius: 8px;
   border: none;
-  background-color: rgb(231, 199, 199);
+  background-color: #80AF81;
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: 900;
   font-size: 1.6em;
+  margin-right: 10px; 
 }
 .ChatTabHeader button:hover{
   transition: all .5s;
   background-color: rgb(209, 155, 155);
 }
 .ChatTabMsgs{
-  width:100%;
+  width:98.7%;
   height: 84.5%;
   overflow: scroll;
   overflow-x: hidden;
+  margin-left: 14px;
+  color: #D6EFD8;
+}
+.Timer{
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  top: 120px;
+  right: -600px;
 }
 .ChatTabMsgsInput{
   background-color: #80AF81;
@@ -214,7 +272,7 @@ code {
   align-items: center;
   width: 100%;
   height: 8%;
-  gap: 20px;
+  gap: 18px;
   border-bottom-right-radius: 10px;
   border-top: 2px solid #1A5319;
 }
@@ -224,7 +282,7 @@ code {
   margin-left: 10px;
   border-radius: 8px;
   border: none;
-  background-color: rgb(231, 199, 199);
+  background-color: #80AF81;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -242,6 +300,7 @@ code {
   border-radius: 8px;
   margin-left: 20px;
   border: none;
+  background-color: #D6EFD8;
 }
 .ChatTabNoRoomActive h2{
   color: rgba(122, 111, 111, 0.349);
@@ -259,7 +318,7 @@ code {
   transform: translate(-50%, -50%);
 }
 .RoomCreationPopUp {
-  background-color: rgb(184, 154, 115);
+  background-color: #80AF81;
   width: 30%;
   height: 30%;
   position: absolute;
@@ -271,7 +330,7 @@ code {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  border: 5px solid rgba(0, 0, 0, 0.212);
+  border: 5px solid #1A5319;
   border-radius: 16px
 }
 .RoomCreationPopUpHeader{
@@ -292,7 +351,7 @@ code {
   align-items: center;
   font-size: 1em;
   border-radius: 5px;
-  background-color:  rgb(184, 154, 115);
+  background-color: #80AF81 ;
   border: none;
   position: absolute;
   margin-left: 520px;
@@ -333,6 +392,13 @@ code {
   letter-spacing: 1px;
 }
 
+.RoomCreationPopUpInput input{
+  background-color: #D6EFD8;
+}
+.RoomCreationPopUpPasswordInput input{
+  background-color: #D6EFD8;
+}
+
 .RoomCreationPopUpButton button {
   width: auto; /* Optional: Adjust button width */
   align-self: flex-start; /* Ensure the button stays aligned left */
@@ -361,7 +427,8 @@ code {
   border: none;
   font-size: 1.2em;
   font-weight: bolder;
-  background-color: rgb(219, 198, 169);
+  background-color: #1A5319;
+  color: #D6EFD8;
 }
 .RoomCreationPopUpSubmitBtn button:hover{
   background-color: rgb(155, 141, 121);
@@ -508,7 +575,7 @@ code {
 }
 .DeleteRoomBtn{
   width: 140px;
-  height: 20px;
+  height: 30px;
   border-radius: 12px;
   border: none;
   font-size: 1.2em;
@@ -522,7 +589,7 @@ code {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
   gap: 10px;
 }
 .SettingsUserDisplay{
@@ -547,15 +614,21 @@ code {
   gap: 13px;
 }
 .LogOutButton{
+  width: 100px;
+  height: 35px;
   margin-top: 5%;
 }
 .LogOutButton button{
-  width: 120px;
+  width: 110px;
   height: 35px;
   font-size: 1.5em;
   font-weight: bolder;
   border: none;
-  border-radius: 8px;
-  background-color: #508D4E;
+  border-radius: 4px;
+  background-color: #80AF81;
   color: #D6EFD8;
+}
+.LogOutButton button:hover{
+  transition: all 0.5s;
+  margin-left: 10px;
 }

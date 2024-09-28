@@ -14,6 +14,8 @@ import lock from '../lock.svg'
 import menu from '../menu.svg'
 import send from '../send.svg'
 import mail from '../mail.svg'
+import x from '../x.svg'
+import trash from '../trash-2.svg'
 
 export const MainPage = () => {
 
@@ -38,6 +40,7 @@ export const MainPage = () => {
     const [PubPrivRoomPass, setPubPrivRoomPass] = useState("");
     const [PubPrivRoomCreatedBy, setPubPrivRoomCreatedBy] = useState("");
     const [PrivateRoomEnterPopUp, setPrivateRoomEnterPopUp] = useState(false);
+    const [PubPrivRoomTimer, setPubPrivRoomTimer] = useState("");
 
     //Room Chat and Update Variables
     const [MessageList, setMessageList] = useState([]);
@@ -220,29 +223,6 @@ export const MainPage = () => {
     }
 
 
-    //Updating Room
-    const handleRoomUpdate = async (e) =>{
-        e.preventDefault();
-
-        try {
-
-            const RoomDocRef = doc(db, "Rooms", PubPrivRoomID);
-
-            if(userEmail == PubPrivRoomCreatedBy){
-                console.log("Current user can edit/delete room");
-                await updateDoc(RoomDocRef, {
-                    roomCollectionName: NewRoomName
-                });
-                setCurrentActiveRoom(NewRoomName);
-            }else{
-                console.log("Curretn user can't edit/delete room");
-            }
-        } catch (err) {
-            console.error(err);
-        }
-    }
-
-
     //Deleting Room
     const handleRoomDelete = async () => {
 
@@ -268,6 +248,7 @@ export const MainPage = () => {
         try {
             await signOut(auth);
             console.log("User logged out.");
+            localStorage.removeItem("username");
             navigate('/');
         } catch (err) {
             console.error("Error during sign-out:", err);
@@ -275,11 +256,12 @@ export const MainPage = () => {
     };
 
     //ClickedRoomToGetMessagesButton
-    const GetRoomDataForMessages = async (roomName, roomPrivacy, roomPass, roomID, roomCreatedBy) => { 
+    const GetRoomDataForMessages = async (roomName, roomPrivacy, roomPass, roomID, roomCreatedBy, roomExpiresAt) => { 
         setPubPrivRoomID(roomID);
         setPubPrivRoomName(roomName);
         setPubPrivRoomPass(roomPass);
         setPubPrivRoomCreatedBy(roomCreatedBy);
+        setPubPrivRoomTimer(roomExpiresAt);
 
         if(roomPrivacy){
                 const GetMessagesRefresh = async () => {
@@ -316,7 +298,7 @@ export const MainPage = () => {
                             <div className='RoomCreationPopUp'>
                                 <div className='RoomCreationPopUpHeader'>
                                     <h2>Create a Room</h2>
-                                    <button onClick={RoomCreationPopUpFunc}>✖</button>
+                                    <button onClick={RoomCreationPopUpFunc}><img src={x}/></button>
                                 </div>
                                 <RoomCreationPopUpComponent/>
                             </div>
@@ -337,14 +319,10 @@ export const MainPage = () => {
                     {UpdateRoomPopUp ? (
                          <div className='UpdateRoomPopUpBG'>
                          <div className='UpdateRoomPopU'>
-                             <div className='UpdateRoomPopUpHeader'>
-                                 <h2>Update/Delete</h2>
-                                 <button className='exitUpdatePass' onClick={UpdateRoomEnterFunc}>✖</button>
-                             </div>
-                             <input type='text' placeholder='Pass' value={NewRoomName} onChange={(e) => setNewRoomName(e.target.value)}/>
+                                <h2>Confirm?</h2>
                              <div className='UpdateROomBtns'>
-                                <button className='saveUpdates' onClick={handleRoomUpdate}>Save</button>
-                                <button className='DeleteRoomBtn' onClick={handleRoomDelete}>Delete Room</button>
+                                <button className='DeleteRoomBtn' onClick={handleRoomDelete}>YES</button>
+                                <button className='DeleteRoomBtn' onClick={UpdateRoomEnterFunc}>NO</button>
                              </div>
                          </div> 
                      </div>
@@ -362,7 +340,7 @@ export const MainPage = () => {
                                 </div>
                                 <div className='ActiveRooms'>
                                     {Roomlist.map((room) => (
-                                            <button className='RoomsListDiv' onClick={() => GetRoomDataForMessages(room.roomCollectionName, room.roomPrivacy, room.roomPass, room.id, room.CreatedBy)}>
+                                            <button className='RoomsListDiv' onClick={() => GetRoomDataForMessages(room.roomCollectionName, room.roomPrivacy, room.roomPass, room.id, room.CreatedBy, room.expiresAt.Time)}>
                                                 <div className='RoomListInsideDiv'>
                                                     <div className='RoomListInsideDivName'>
                                                         <h2>{room.roomCollectionName}</h2>
@@ -393,9 +371,9 @@ export const MainPage = () => {
                                         <img src={mail}/>
                                         <h2>{userEmail}</h2>
                                     </div>
-                                    <div className='LogOutButton'>
-                                        <button onClick={LogOutWithGoogle}>Log Out</button>
-                                    </div>
+                                </div>
+                                <div className='LogOutButton'>
+                                    <button onClick={LogOutWithGoogle}>Log Out</button>
                                 </div>
                             </>
                         )}
@@ -406,15 +384,21 @@ export const MainPage = () => {
                                 <div className='ChatTabHeader'>
                                     <h1>{CurrentActiveRoom}</h1>
                                     {userEmail == PubPrivRoomCreatedBy ? (
-                                        <button onClick={UpdateRoomEnterFunc}><img src={menu}/></button>
+                                        <button onClick={UpdateRoomEnterFunc}><img src={trash}/></button>
                                     ): null}
                                 </div>
                                 <div className='ChatTabMsgs'>
                                     {MessageList.map((message) => (
-                                        <div>
-                                            <p>{message.sentby}: {message.text}</p>
-                                        </div>
+                                        <>
+                                            <div>
+                                                <p>{message.sentby}: {message.text}</p>
+                                            </div>
+                                        </>
+
                                     ))}
+                                            <div className='Timer'>
+                                                <p>Expires In:{PubPrivRoomTimer}</p>
+                                            </div>
                                 </div>
                                 <div className='ChatTabMsgsInput'>
                                     <input type='text' placeholder='your message' value={textMsg} onChange={(e) => setTextMsg(e.target.value)}/>
