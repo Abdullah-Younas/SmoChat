@@ -6,6 +6,14 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import RoomCreationPopUpComponent from './RoomCreationPopUpComponent';
 import { useNavigate } from 'react-router-dom';
 import messagesquare from '../message-square.svg';
+import user from '../user.svg';
+import userdark from '../userdark.svg';
+import plussquare from '../plus-square.svg';
+import unlock from '../unlock.svg';
+import lock from '../lock.svg'
+import menu from '../menu.svg'
+import send from '../send.svg'
+import mail from '../mail.svg'
 
 export const MainPage = () => {
 
@@ -343,14 +351,14 @@ export const MainPage = () => {
                     ): null}
                     <div className='SideTab'>
                             <button className='SideTabBtn1' onClick={SidebarVarChatActive}><img src={messagesquare}/></button>
-                            <button className='SideTabBtn2' onClick={SidebarVarSettingsActive}>⚙</button>
+                            <button className='SideTabBtn2' onClick={SidebarVarSettingsActive}><img src={user}/></button>
                     </div>
                     <div className='RoomsTab'>
                         {sidebarbtnActiveChat ? (
                             <>
                                 <div className='RoomsTabHeader'>
                                     <h1>ChatRooms</h1>
-                                    <button onClick={RoomCreationPopUpFunc}>🖋</button>
+                                    <button onClick={RoomCreationPopUpFunc}><img src={plussquare}/></button>
                                 </div>
                                 <div className='ActiveRooms'>
                                     {Roomlist.map((room) => (
@@ -360,7 +368,11 @@ export const MainPage = () => {
                                                         <h2>{room.roomCollectionName}</h2>
                                                     </div>
                                                     <div className='RoomListInsideDivIconDiv'>
-                                                        <h2>🔓</h2>
+                                                        {room.roomPrivacy ? (
+                                                            <img src={unlock}/>
+                                                        ) : (
+                                                            <img src={lock}/>
+                                                        )}
                                                     </div>
                                                 </div>
                                             </button>
@@ -373,8 +385,14 @@ export const MainPage = () => {
                                     <h1>Settings</h1>
                                 </div>
                                 <div className='SettingsUserDisplay'>
-                                    <h2>Name: <strong>{userName}</strong></h2>
-                                    <h2>Email: <strong>{userEmail}</strong></h2>
+                                    <div className='settingsusername'>
+                                        <img src={userdark}/> 
+                                        <h2>{userName}</h2>
+                                    </div>
+                                    <div className='settingsusermail'>
+                                        <img src={mail}/>
+                                        <h2>{userEmail}</h2>
+                                    </div>
                                     <div className='LogOutButton'>
                                         <button onClick={LogOutWithGoogle}>Log Out</button>
                                     </div>
@@ -388,7 +406,7 @@ export const MainPage = () => {
                                 <div className='ChatTabHeader'>
                                     <h1>{CurrentActiveRoom}</h1>
                                     {userEmail == PubPrivRoomCreatedBy ? (
-                                        <button onClick={UpdateRoomEnterFunc}>🍴</button>
+                                        <button onClick={UpdateRoomEnterFunc}><img src={menu}/></button>
                                     ): null}
                                 </div>
                                 <div className='ChatTabMsgs'>
@@ -400,7 +418,7 @@ export const MainPage = () => {
                                 </div>
                                 <div className='ChatTabMsgsInput'>
                                     <input type='text' placeholder='your message' value={textMsg} onChange={(e) => setTextMsg(e.target.value)}/>
-                                    <button onClick={handleChatSubmit}>➡</button>
+                                    <button onClick={handleChatSubmit}><img src={send}/></button>
                                 </div>
                             </>
                         ) : (

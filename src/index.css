@@ -34,7 +34,7 @@ code {
   align-items: center;
 }
 .MainBackground button{
-  background-color: #508D4E !important;
+  background-color: #80AF81 !important;
 }
 .MainBackground button:hover{
   background-color: #777e78 !important;
@@ -51,7 +51,7 @@ code {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 85%;
+  gap: 86.5%;
 }
 .SideTab button{
   width: 40px;
@@ -114,8 +114,8 @@ code {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(223, 205, 183);
-  border-bottom: 2px solid rgb(240, 167, 78);
+  background-color: #80AF81;
+  border-bottom: 2px solid #1A5319;
   height: 7.5%;
 }
 .ActiveRooms{
@@ -137,9 +137,11 @@ code {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #1A5319;
+  font-size: 1.2em;
 }
 .RoomsListDiv:hover{
-  background-color: #3e703d;
+  color: #D6EFD8;
 }
 .RoomListInsideDiv{
   width: 100%;
@@ -177,7 +179,7 @@ code {
   background-color: #80AF81;
   display: flex;
   justify-content: space-evenly;
-  gap: 70%;
+  gap: 80%;
   align-items: center;
   width: 100%; /* Reduces width to add space */
   height: 7.5%;
@@ -524,6 +526,7 @@ code {
   gap: 10px;
 }
 .SettingsUserDisplay{
+  font-size: 0.9em;
   display: flex;
   justify-content: center;
   align-items:flex-start;
@@ -531,8 +534,20 @@ code {
   margin-left: 10px;
   margin-top: 5%;
 }
+.settingsusername{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 13px;
+}
+.settingsusermail{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 13px;
+}
 .LogOutButton{
-  margin-top: 20%;
+  margin-top: 5%;
 }
 .LogOutButton button{
   width: 120px;
@@ -541,8 +556,6 @@ code {
   font-weight: bolder;
   border: none;
   border-radius: 8px;
-  background-color: rgb(219, 198, 169);
-}
-.LogOutButton button:hover{
-  background-color: rgb(155, 141, 121);
+  background-color: #508D4E;
+  color: #D6EFD8;
 }
