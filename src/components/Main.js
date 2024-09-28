@@ -298,7 +298,7 @@ export const MainPage = () => {
                             <div className='RoomCreationPopUp'>
                                 <div className='RoomCreationPopUpHeader'>
                                     <h2>Create a Room</h2>
-                                    <button onClick={RoomCreationPopUpFunc}><img src={x}/></button>
+                                    <button onClick={RoomCreationPopUpFunc}><img src={x} alt='cross'/></button>
                                 </div>
                                 <RoomCreationPopUpComponent/>
                             </div>
@@ -309,7 +309,7 @@ export const MainPage = () => {
                             <div className='PrivateRoomPopUp'>
                                 <div className='PrivateRoomPopUpHeader'>
                                     <h2>Enter The Password</h2>
-                                    <button className='exitPass' onClick={PrivateRoomEnterFunc}>✖</button>
+                                    <button className='exitPass' onClick={PrivateRoomEnterFunc}><img src={x} alt='cross'/></button>
                                 </div>
                                 <input type='text' placeholder='Pass' value={RoomPassword} onChange={(e) => SetRoomPassword(e.target.value)}/>
                                 <button className='submitPass' onClick={HandlePasswordSubmit}>Submit</button>
@@ -328,15 +328,15 @@ export const MainPage = () => {
                      </div>
                     ): null}
                     <div className='SideTab'>
-                            <button className='SideTabBtn1' onClick={SidebarVarChatActive}><img src={messagesquare}/></button>
-                            <button className='SideTabBtn2' onClick={SidebarVarSettingsActive}><img src={user}/></button>
+                            <button className='SideTabBtn1' onClick={SidebarVarChatActive}><img src={messagesquare} alt='chat'/></button>
+                            <button className='SideTabBtn2' onClick={SidebarVarSettingsActive}><img src={user} alt='useroptions'/></button>
                     </div>
                     <div className='RoomsTab'>
                         {sidebarbtnActiveChat ? (
                             <>
                                 <div className='RoomsTabHeader'>
                                     <h1>ChatRooms</h1>
-                                    <button onClick={RoomCreationPopUpFunc}><img src={plussquare}/></button>
+                                    <button onClick={RoomCreationPopUpFunc}><img src={plussquare} alt='newroom'/></button>
                                 </div>
                                 <div className='ActiveRooms'>
                                     {Roomlist.map((room) => (
@@ -347,9 +347,9 @@ export const MainPage = () => {
                                                     </div>
                                                     <div className='RoomListInsideDivIconDiv'>
                                                         {room.roomPrivacy ? (
-                                                            <img src={unlock}/>
+                                                            <img src={unlock} alt='publicroom'/>
                                                         ) : (
-                                                            <img src={lock}/>
+                                                            <img src={lock} alt='privateroom'/>
                                                         )}
                                                     </div>
                                                 </div>
@@ -364,11 +364,11 @@ export const MainPage = () => {
                                 </div>
                                 <div className='SettingsUserDisplay'>
                                     <div className='settingsusername'>
-                                        <img src={userdark}/> 
+                                        <img src={userdark} alt='username'/> 
                                         <h2>{userName}</h2>
                                     </div>
                                     <div className='settingsusermail'>
-                                        <img src={mail}/>
+                                        <img src={mail} alt='email'/>
                                         <h2>{userEmail}</h2>
                                     </div>
                                 </div>
@@ -384,7 +384,7 @@ export const MainPage = () => {
                                 <div className='ChatTabHeader'>
                                     <h1>{CurrentActiveRoom}</h1>
                                     {userEmail == PubPrivRoomCreatedBy ? (
-                                        <button onClick={UpdateRoomEnterFunc}><img src={trash}/></button>
+                                        <button onClick={UpdateRoomEnterFunc}><img src={trash} alt='delete'/></button>
                                     ): null}
                                 </div>
                                 <div className='ChatTabMsgs'>
@@ -402,7 +402,7 @@ export const MainPage = () => {
                                 </div>
                                 <div className='ChatTabMsgsInput'>
                                     <input type='text' placeholder='your message' value={textMsg} onChange={(e) => setTextMsg(e.target.value)}/>
-                                    <button onClick={handleChatSubmit}><img src={send}/></button>
+                                    <button onClick={handleChatSubmit}><img src={send} alt='sendtext'/></button>
                                 </div>
                             </>
                         ) : (
