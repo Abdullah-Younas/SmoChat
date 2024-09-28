@@ -5,6 +5,7 @@ import { db } from '../config/firebase-config';
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import RoomCreationPopUpComponent from './RoomCreationPopUpComponent';
 import { useNavigate } from 'react-router-dom';
+import messagesquare from '../message-square.svg';
 
 export const MainPage = () => {
 
@@ -85,6 +86,7 @@ export const MainPage = () => {
                                 await updateDoc(UserDocRefAutoDeleteRoom, {
                                     RoomCreated: false,
                                 });
+                                setUserInRoom(false);
                             } else {
                                 // Room is still active, add it to the list
                                 filteredRoomsData.push({
@@ -340,7 +342,7 @@ export const MainPage = () => {
                      </div>
                     ): null}
                     <div className='SideTab'>
-                            <button className='SideTabBtn1' onClick={SidebarVarChatActive}>📰</button>
+                            <button className='SideTabBtn1' onClick={SidebarVarChatActive}><img src={messagesquare}/></button>
                             <button className='SideTabBtn2' onClick={SidebarVarSettingsActive}>⚙</button>
                     </div>
                     <div className='RoomsTab'>
