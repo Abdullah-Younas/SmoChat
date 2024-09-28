@@ -5,9 +5,533 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: rgb(122, 111, 111);
+  margin: 0;
+  padding: 0;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.Background{
+  background-color: rgb(58, 46, 46);
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.MainBackground{
+  background-color: rgb(63, 58, 51);
+  width: 85%;
+  height: 85%;
+  border: 5px solid rgb(255, 153, 0);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+}
+.SideTab{
+  background-color: rgb(255, 255, 255);
+  width: 4%;
+  height: 100%;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  text-wrap:balance;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 85%;
+}
+.SideTab button{
+  width: 40px;
+  height: 40px;
+  font-weight: 900;
+  border-radius: 8px;
+  background-color: rgb(231, 199, 199);
+  border: none;
+}
+.SideTab button:hover{
+  transition: all .5s;
+  background-color: rgb(209, 155, 155);
+}
+.SideTabBtn1{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3em;
+}
+.SideTabBtn2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.2em;
+}
+.RoomsTab{
+  background-color: bisque;
+  width: 28%;
+  height: 100%;
+  text-align: center;
+}
+.RoomsTabHeader{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 20px;
+  background-color: rgb(223, 205, 183);
+  border-bottom: 2px solid rgb(240, 167, 78);
+  height: 7.5%;
+}
+.RoomsTabHeader button{
+  width: 35px;
+  height: 35px;
+  border-radius: 8px;
+  border: none;
+  background-color: rgb(231, 199, 199);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 900;
+  font-size: 1.6em;
+}
+.RoomsTabHeader button:hover{
+  transition: all .5s;
+  background-color: rgb(209, 155, 155);
+}
+.RoomsTabHeaderSettings{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(223, 205, 183);
+  border-bottom: 2px solid rgb(240, 167, 78);
+  height: 7.5%;
+}
+.ActiveRooms{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 92.5%;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.RoomsListDiv{
+  width: 100%;
+  height: 8%;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.RoomsListDiv:hover{
+  background-color: gray;
+}
+.RoomListInsideDiv{
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.RoomListInsideDivName{
+  width: 100%;
+  align-self: flex-end;
+}
+.ActiveRoomsNoActive{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center; /* Ensures text is centered */
+}
+.ActiveRoomsNoActive h2{
+  transform: translateY(-35px);
+  color: rgba(122, 111, 111, 0.349);
+  font-style: italic;
+}
+.ChatTab{
+  background-color: burlywood;
+  width: 68%;
+  height: 100%;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.ChatTabHeader {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 70%;
+  align-items: center;
+  width: 100%; /* Reduces width to add space */
+  height: 7.5%;
+  border-top-right-radius: 10px;
+  border-bottom: 2px solid bisque;
+}
+.ChatTabHeader button{
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: none;
+  background-color: rgb(231, 199, 199);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 900;
+  font-size: 1.6em;
+}
+.ChatTabHeader button:hover{
+  transition: all .5s;
+  background-color: rgb(209, 155, 155);
+}
+.ChatTabMsgs{
+  width:100%;
+  height: 84.5%;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.ChatTabMsgsInput{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 8%;
+  gap: 20px;
+  border-bottom-right-radius: 10px;
+  border-top: 2px solid bisque;
+}
+.ChatTabMsgsInput button{
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
+  border-radius: 8px;
+  border: none;
+  background-color: rgb(231, 199, 199);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 900;
+  font-size: 1.6em;
+}
+.ChatTabMsgsInput button:hover{
+  transition: all .5s;
+  background-color: rgb(209, 155, 155);
+}
+.ChatTabMsgsInput input{
+  width: 90%;
+  height: 40%;
+  padding: 5px;
+  border-radius: 8px;
+  margin-left: 20px;
+  border: none;
+}
+.ChatTabNoRoomActive h2{
+  color: rgba(122, 111, 111, 0.349);
+  font-style: italic;
+}
+.RoomCreationPopUpBG{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  overflow: hidden;
+  z-index: 100000;
+  background-color: rgba(184, 154, 115, 0.555);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.RoomCreationPopUp {
+  background-color: rgb(184, 154, 115);
+  width: 30%;
+  height: 30%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 5px solid rgba(0, 0, 0, 0.212);
+  border-radius: 16px
+}
+.RoomCreationPopUpHeader{
+  width: 100%;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 16px;
+  font-size: 1.5em;
+  border-top-right-radius: 16px;
+}
+.RoomCreationPopUpHeader button{
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1em;
+  border-radius: 5px;
+  background-color:  rgb(184, 154, 115);
+  border: none;
+  position: absolute;
+  margin-left: 520px;
+}
+.RoomCreationPopUpHeader button:hover{
+  background-color: rgb(209, 182, 147);
+}
+.RoomCreationPopUpData {
+  width: 60%;
+  height: 65%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensure even spacing between the items */
+  align-items: flex-start; /* Align items to the left */
+  padding: 20px; /* Optional: Add padding for spacing */
+  gap: 10px;
+}
+
+.RoomCreationPopUpInput, 
+.RoomCreationPopUpPasswordInput, 
+.RoomCreationPopUpButton {
+  width: 100%; /* Make the children take full width */
+}
+
+.RoomCreationPopUpInput label, 
+.RoomCreationPopUpPasswordInput label {
+  font-weight: bolder;
+  margin-bottom: 5px; /* Add space between label and input */
+}
+
+.RoomCreationPopUpInput input, 
+.RoomCreationPopUpPasswordInput input {
+  width: 100%; /* Make the input field take the full width */
+  padding: 5px; /* Optional: Add padding for input fields */
+  border: none;
+  border-radius: 6px;
+  font-weight: bolder;
+  letter-spacing: 1px;
+}
+
+.RoomCreationPopUpButton button {
+  width: auto; /* Optional: Adjust button width */
+  align-self: flex-start; /* Ensure the button stays aligned left */
+  padding: 5px 10px;
+  cursor: pointer;
+  font-weight: bold;
+  border: none;
+  background: linear-gradient(to right,  rgb(133, 126, 116) 48.5%,  rgb(219, 198, 169) 48.5%);  /* Gradient colors */
+  border-radius: 7px;
+}
+.RoomCreationPopUpButton button:hover{
+  background: linear-gradient(to right,  rgb(88, 86, 82) 48.5%,  rgb(168, 155, 136) 48.5%);
+}
+.RoomCreationPopUpSubmitBtn{
+  width: 100%;
+  height: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.RoomCreationPopUpSubmitBtn button{
+  width: 100px;
+  height: 80%;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  border: none;
+  font-size: 1.2em;
+  font-weight: bolder;
+  background-color: rgb(219, 198, 169);
+}
+.RoomCreationPopUpSubmitBtn button:hover{
+  background-color: rgb(155, 141, 121);
+}
+.PrivateRoomEnterPopUpBG{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  overflow: hidden;
+  z-index: 100000;
+  background-color: rgba(184, 154, 115, 0.555);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.PrivateRoomPopUp{
+  background-color: rgb(184, 154, 115);
+  width: 30%;
+  height: 20%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 5px solid rgba(0, 0, 0, 0.212);
+  border-radius: 16px
+}
+.PrivateRoomPopUpHeader{
+  transform: translateY(-35px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.exitPass{
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1em;
+  border-radius: 5px;
+  background-color:  rgb(184, 154, 115);
+  border: none;
+  position: absolute;
+  margin-left: 520px;
+}
+.exitPass:hover{
+  background-color: rgb(209, 182, 147);
+}
+.PrivateRoomPopUp input{
+  transform: translateY(-15px);
+  width: 200px;
+  height: 20px;
+  padding: 3px;
+  border: none;
+  border-radius: 8px;
+}
+.submitPass{
+  width: 100px;
+  height: 30px;
+  border-radius: 12px;
+  border: none;
+  font-size: 1.2em;
+  font-weight: bolder;
+  background-color: rgb(219, 198, 169);
+}
+.submitPass:hover{
+  background-color: rgb(155, 141, 121);
+}
+.UpdateRoomPopUpBG{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  overflow: hidden;
+  z-index: 100000;
+  background-color: rgba(184, 154, 115, 0.555);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.UpdateRoomPopU{
+  background-color: rgb(184, 154, 115);
+  width: 30%;
+  height: 20%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 5px solid rgba(0, 0, 0, 0.212);
+  border-radius: 16px
+}
+.UpdateRoomPopUpHeader{
+  transform: translateY(-30px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.exitUpdatePass{
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1em;
+  border-radius: 5px;
+  background-color:  rgb(184, 154, 115);
+  border: none;
+  position: absolute;
+  margin-left: 520px;
+}
+.exitUpdatePass:hover{
+  background-color: rgb(209, 182, 147);
+}
+.UpdateRoomPopU input{
+  transform: translateY(-15px);
+  width: 200px;
+  height: 20px;
+  padding: 3px;
+  border: none;
+  border-radius: 8px;
+}
+.saveUpdates{
+  width: 80px;
+  height: 20px;
+  border-radius: 12px;
+  border: none;
+  font-size: 1.2em;
+  font-weight: bolder;
+  background-color: rgb(219, 198, 169);
+}
+.saveUpdates:hover{
+  background-color: rgb(155, 141, 121);
+}
+.DeleteRoomBtn{
+  width: 140px;
+  height: 20px;
+  border-radius: 12px;
+  border: none;
+  font-size: 1.2em;
+  font-weight: bolder;
+  background-color: rgb(219, 198, 169);
+}
+.DeleteRoomBtn:hover{
+  background-color: rgb(155, 141, 121);
+}
+.UpdateROomBtns{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+.SettingsUserDisplay{
+  display: flex;
+  justify-content: center;
+  align-items:flex-start;
+  flex-direction: column;
+  margin-left: 10px;
+  margin-top: 5%;
+}
+.LogOutButton{
+  margin-top: 20%;
+}
+.LogOutButton button{
+  width: 120px;
+  height: 35px;
+  font-size: 1.5em;
+  font-weight: bolder;
+  border: none;
+  border-radius: 8px;
+  background-color: rgb(219, 198, 169);
+}
+.LogOutButton button:hover{
+  background-color: rgb(155, 141, 121);
 }
