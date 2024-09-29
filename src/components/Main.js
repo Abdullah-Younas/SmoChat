@@ -16,9 +16,14 @@ import send from '../send.svg'
 import mail from '../mail.svg'
 import x from '../x.svg'
 import trash from '../trash-2.svg'
+import logout from '../log-out.svg'
 import { Timestamp } from 'firebase/firestore';
+import CryptoJS from 'crypto-js';
 
 export const MainPage = () => {
+
+    //SECRET_KEY 
+    const SECRET_KEY = 'wf1-g2$G31-g2_3g2#!@RQ@FA2g#%#&#g34_h3_H43^%&_8665_75'
 
     //User Variables
     const [userName, setUserName] = useState("");
@@ -57,6 +62,19 @@ export const MainPage = () => {
     const navigate = useNavigate();
 
 
+    const LeaveRoom = () => {
+        console.log("Leave Room");
+        setUserInRoom(false);
+        window.location.reload();
+    }
+    const EnterRoom = () => {
+        setUserInRoom(true);
+    }
+    function DecryptEmail(PrivateEmail){
+        const bytes = CryptoJS.AES.decrypt(PrivateEmail, SECRET_KEY);
+        return bytes.toString(CryptoJS.enc.Utf8);
+    }
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
@@ -73,7 +91,8 @@ export const MainPage = () => {
                         const email = getUser.data().Email;
                         setUserName(name);
                         setUserAlreadyCreatedRoom(RoomCreated);
-                        setUserEmail(email);
+                        const DecryptedEmail = DecryptEmail(email);
+                        setUserEmail(DecryptedEmail);
                     } else {
                         console.log("No Such Document");
                     }
@@ -98,7 +117,7 @@ export const MainPage = () => {
                                 await updateDoc(UserDocRefAutoDeleteRoom, {
                                     RoomCreated: false,
                                 });
-                                setUserInRoom(false);
+                                LeaveRoom();
                             } else {
                                 // Room is still active, add it to the list
                                 filteredRoomsData.push({
@@ -173,7 +192,7 @@ export const MainPage = () => {
             console.log(RoomPassword);
             console.log(PubPrivRoomPass);
             if(RoomPassword == PubPrivRoomPass){
-                setUserInRoom(true);
+                EnterRoom();
                 getMessages(PubPrivRoomName, PubPrivRoomID);
                 PrivateRoomEnterFunc();
             }else{
@@ -289,12 +308,12 @@ export const MainPage = () => {
                         ...doc.data(), // Spread the document data (message content, timestamp, etc.)
                     }));
                     setMessageList(FilteredMessagesFromRoom);
-                    setUserInRoom(true);
+                    EnterRoom();
                 }
                 setInterval(GetMessagesRefresh, 200);
         }else{
             if(userEmail == roomCreatedBy){
-                setUserInRoom(true);
+                EnterRoom();
                 getMessages(roomName, roomID);
             }else{
                 console.log("Users dont match");
@@ -347,51 +366,94 @@ export const MainPage = () => {
                             <button className='SideTabBtn2' onClick={SidebarVarSettingsActive}><img src={user} alt='useroptions'/></button>
                     </div>
                     <div className='RoomsTab'>
-                        {sidebarbtnActiveChat ? (
-                            <>
-                                <div className='RoomsTabHeader'>
+                    {sidebarbtnActiveChat && !UserinRoom ? (
+                    // Case 1: Not in a room, and sidebar active — show chat rooms
+                    <>
+                        <div className='RoomsTabHeader'>
+                            <h1>ChatRooms</h1>
+                            <button onClick={RoomCreationPopUpFunc}>
+                                <img src={plussquare} alt='newroom' />
+                            </button>
+                        </div>
+                        <div className='ActiveRooms'>
+                            {Roomlist.map((room) => (
+                                <button
+                                    key={room.id} // Always use a key in lists
+                                    className='RoomsListDiv'
+                                    onClick={() => GetRoomDataForMessages(room.roomCollectionName, room.roomPrivacy, room.roomPass, room.id, room.CreatedBy, room.expiresAt)}
+                                >
+                                    <div className='RoomListInsideDiv'>
+                                        <div className='RoomListInsideDivName'>
+                                            <h2>{room.roomCollectionName}</h2>
+                                        </div>
+                                        <div className='RoomListInsideDivIconDiv'>
+                                            {room.roomPrivacy ? (
+                                                <img src={unlock} alt='publicroom' />
+                                            ) : (
+                                                <img src={lock} alt='privateroom' />
+                                            )}
+                                        </div>
+                                    </div>
+                                </button>
+                            ))}
+                        </div>
+                    </>
+                ) : UserinRoom ? (
+                    !sidebarbtnActiveChat ? (
+                        // Case 2: In a room and sidebar not active — show settings
+                        <>
+                            <div className='RoomsTabHeaderSettings'>
+                                <h1>Settings</h1>
+                            </div>
+                            <div className='SettingsUserDisplay'>
+                                <div className='settingsusername'>
+                                    <img src={userdark} alt='username' />
+                                    <h2>{userName}</h2>
+                                </div>
+                                <div className='settingsusermail'>
+                                    <img src={mail} alt='email' />
+                                    <h2>{userEmail}</h2>
+                                </div>
+                            </div>
+                            <div className='LogOutButton'>
+                                <button onClick={LogOutWithGoogle}>Log Out</button>
+                            </div>
+                        </>
+                    ) : (
+                        // Case 3: In a room and sidebar active — show "Leave Current Room"
+                        <>
+                            <div className='LeaveRoomHeader'>
+                                <div className='LeaveRoomHeaderTab'>
                                     <h1>ChatRooms</h1>
-                                    <button onClick={RoomCreationPopUpFunc}><img src={plussquare} alt='newroom'/></button>
                                 </div>
-                                <div className='ActiveRooms'>
-                                    {Roomlist.map((room) => (
-                                            <button className='RoomsListDiv' onClick={() => GetRoomDataForMessages(room.roomCollectionName, room.roomPrivacy, room.roomPass, room.id, room.CreatedBy, room.expiresAt)}>
-                                                <div className='RoomListInsideDiv'>
-                                                    <div className='RoomListInsideDivName'>
-                                                        <h2>{room.roomCollectionName}</h2>
-                                                    </div>
-                                                    <div className='RoomListInsideDivIconDiv'>
-                                                        {room.roomPrivacy ? (
-                                                            <img src={unlock} alt='publicroom'/>
-                                                        ) : (
-                                                            <img src={lock} alt='privateroom'/>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            </button>
-                                    ))}
+                                <div className='LeaveRoomButtonSideTab'>
+                                    <h3>To Display Rooms, Please Leave Current Room</h3>
                                 </div>
-                            </>
-                        ) : (
-                            <>
-                                <div className='RoomsTabHeaderSettings'>
-                                    <h1>Settings</h1>
-                                </div>
-                                <div className='SettingsUserDisplay'>
-                                    <div className='settingsusername'>
-                                        <img src={userdark} alt='username'/> 
-                                        <h2>{userName}</h2>
-                                    </div>
-                                    <div className='settingsusermail'>
-                                        <img src={mail} alt='email'/>
-                                        <h2>{userEmail}</h2>
-                                    </div>
-                                </div>
-                                <div className='LogOutButton'>
-                                    <button onClick={LogOutWithGoogle}>Log Out</button>
-                                </div>
-                            </>
-                        )}
+                            </div>
+                        </>
+                    )
+                ) : !sidebarbtnActiveChat && !UserinRoom ? (
+                    // Case 4: Sidebar not active and user not in a room — display settings
+                    <>
+                        <div className='RoomsTabHeaderSettings'>
+                            <h1>Settings</h1>
+                        </div>
+                        <div className='SettingsUserDisplay'>
+                            <div className='settingsusername'>
+                                <img src={userdark} alt='username' />
+                                <h2>{userName}</h2>
+                            </div>
+                            <div className='settingsusermail'>
+                                <img src={mail} alt='email' />
+                                <h2>{userEmail}</h2>
+                            </div>
+                        </div>
+                        <div className='LogOutButton'>
+                            <button onClick={LogOutWithGoogle}>Log Out</button>
+                        </div>
+                    </>
+                ) : null}
+
                     </div>
                     <div className='ChatTab'>
                         {UserinRoom? (
@@ -399,8 +461,15 @@ export const MainPage = () => {
                                 <div className='ChatTabHeader'>
                                     <h1>{CurrentActiveRoom}</h1>
                                     {userEmail == PubPrivRoomCreatedBy ? (
-                                        <button onClick={UpdateRoomEnterFunc}><img src={trash} alt='delete'/></button>
-                                    ): null}
+                                        <>
+                                            <div className='ChatTabHeaderButtons'>
+                                                <button onClick={UpdateRoomEnterFunc}><img src={trash} alt='delete'/></button>
+                                                <button onClick={LeaveRoom}><img src={logout} alt='leaveRoom'/></button>
+                                            </div>
+                                        </>
+                                    ): 
+                                        <button onClick={LeaveRoom}><img src={logout} alt='exitRoom'/></button>
+                                    }
                                 </div>
                                 <div className='ChatTabMsgs'>
                                     {MessageList.map((message) => (

@@ -4,11 +4,19 @@ import { db } from '../config/firebase-config';
 import { useEffect, useState } from 'react';
 import { setDoc, doc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import CryptoJS from 'crypto-js';
 
 export const Auth = () => {
     const [Username, setUsername] = useState("");
 
+    const SECRET_KEY = 'wf1-g2$G31-g2_3g2#!@RQ@FA2g#%#&#g34_h3_H43^%&_8665_75'
+
     const navigate = useNavigate();
+
+
+    function encryptEmail(email){
+        return CryptoJS.AES.encrypt(email, SECRET_KEY).toString();
+    }
 
     useEffect(() => {
         const storedUsername = localStorage.getItem("username");
@@ -26,11 +34,13 @@ export const Auth = () => {
             
             const userDocRef = doc(db, "Users", user.uid);
 
+            const encrpyptedEmail = encryptEmail(user.email);
+
             
             await setDoc(userDocRef, {
                 Name: user.displayName,
                 UserUID: user.uid,
-                Email: user.email,
+                Email: encrpyptedEmail,
                 RoomCreated: false
             });
             navigate('/success');
