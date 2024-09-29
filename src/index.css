@@ -252,19 +252,25 @@ code {
   background-color: rgb(209, 155, 155);
 }
 .ChatTabMsgs{
-  width:98.7%;
+  width:100%;
   height: 84.5%;
   overflow: scroll;
   overflow-x: hidden;
-  margin-left: 14px;
   color: #D6EFD8;
+}
+.TextMSG{
+  margin-left: 14px;
+  font-size: 1.3em;
+  font-weight: bolder;
+  word-break: break-all;
+  margin-right: 14px;
 }
 .Timer{
   position: absolute;
   width: 50%;
   height: 50%;
   top: 120px;
-  right: -600px;
+  right: -650px;
 }
 .ChatTabMsgsInput{
   background-color: #80AF81;
@@ -406,7 +412,6 @@ code {
   cursor: pointer;
   font-weight: bold;
   border: none;
-  background: linear-gradient(to right,  rgb(133, 126, 116) 48.5%,  rgb(219, 198, 169) 48.5%);  /* Gradient colors */
   border-radius: 7px;
 }
 .RoomCreationPopUpButton button:hover{
@@ -429,9 +434,6 @@ code {
   font-weight: bolder;
   background-color: #1A5319;
   color: #D6EFD8;
-}
-.RoomCreationPopUpSubmitBtn button:hover{
-  background-color: rgb(155, 141, 121);
 }
 .PrivateRoomEnterPopUpBG{
   width: 100%;

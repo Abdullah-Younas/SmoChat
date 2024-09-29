@@ -113,7 +113,13 @@ export const RoomCreationPopUpComponent = () => {
                                 <input type='text' placeholder='Room Name' maxLength={15} value={RoomName} onChange={(e) => SetRoomName(e.target.value)}/>
                             </div>
                             <div className='RoomCreationPopUpButton'>
-                                <button onClick={setisRoomPublicFunc}>Public&nbsp;&nbsp;&nbsp;&nbsp;Private</button>
+                                <button onClick={setisRoomPublicFunc} style={ isRoomPublic? {
+                                      background: 'linear-gradient(to right, #1A5319 48.5%, #D6EFD8 48.5%)', // Gradient colors
+                                }: {
+                                    background: 'linear-gradient(to right, #D6EFD8 48.5%, #1A5319 48.5%)'
+                                }}>
+                                    Public&nbsp;&nbsp;&nbsp;&nbsp;Private
+                                </button>
                             </div>
                             {isRoomPublic ? (
                                 null

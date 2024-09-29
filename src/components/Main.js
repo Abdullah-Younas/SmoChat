@@ -16,6 +16,7 @@ import send from '../send.svg'
 import mail from '../mail.svg'
 import x from '../x.svg'
 import trash from '../trash-2.svg'
+import { Timestamp } from 'firebase/firestore';
 
 export const MainPage = () => {
 
@@ -131,6 +132,15 @@ export const MainPage = () => {
     if (isLoading) {
         return <h2>Loading...</h2>;  // Display loading indicator while checking auth state
     }
+
+
+    //Timestamp
+    const formatTimestamp = (timestamp) => {
+        if (!timestamp) return "No time set"; // Handle null or undefined timestamps
+        const date = timestamp.toDate(); // Convert Firestore Timestamp to JavaScript Date
+        const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }; // Set options for 24-hour format
+        return date.toLocaleTimeString([], options); // Return only the time
+    };
 
     //Settings
     const SidebarVarSettingsActive = () => {
@@ -261,7 +271,12 @@ export const MainPage = () => {
         setPubPrivRoomName(roomName);
         setPubPrivRoomPass(roomPass);
         setPubPrivRoomCreatedBy(roomCreatedBy);
-        setPubPrivRoomTimer(roomExpiresAt);
+
+        console.log("roomExpiresAt:", roomExpiresAt);
+        const formattedTimeExpiresAt = formatTimestamp(roomExpiresAt);
+        console.log("formattedTimeExpiresAt:", formattedTimeExpiresAt);
+        setPubPrivRoomTimer(formattedTimeExpiresAt);
+
 
         if(roomPrivacy){
                 const GetMessagesRefresh = async () => {
@@ -340,7 +355,7 @@ export const MainPage = () => {
                                 </div>
                                 <div className='ActiveRooms'>
                                     {Roomlist.map((room) => (
-                                            <button className='RoomsListDiv' onClick={() => GetRoomDataForMessages(room.roomCollectionName, room.roomPrivacy, room.roomPass, room.id, room.CreatedBy, room.expiresAt.Time)}>
+                                            <button className='RoomsListDiv' onClick={() => GetRoomDataForMessages(room.roomCollectionName, room.roomPrivacy, room.roomPass, room.id, room.CreatedBy, room.expiresAt)}>
                                                 <div className='RoomListInsideDiv'>
                                                     <div className='RoomListInsideDivName'>
                                                         <h2>{room.roomCollectionName}</h2>
@@ -390,14 +405,14 @@ export const MainPage = () => {
                                 <div className='ChatTabMsgs'>
                                     {MessageList.map((message) => (
                                         <>
-                                            <div>
+                                            <div className='TextMSG'>
                                                 <p>{message.sentby}: {message.text}</p>
                                             </div>
                                         </>
 
                                     ))}
                                             <div className='Timer'>
-                                                <p>Expires In:{PubPrivRoomTimer}</p>
+                                                <p>Expires At: {PubPrivRoomTimer}</p>
                                             </div>
                                 </div>
                                 <div className='ChatTabMsgsInput'>
