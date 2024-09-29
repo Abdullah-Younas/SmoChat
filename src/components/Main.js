@@ -31,6 +31,7 @@ export const MainPage = () => {
     const [UserinRoom, setUserInRoom] = useState(false);
     const [UserAlreadyCreatedRoom, setUserAlreadyCreatedRoom] = useState(false);
     const [UserUID, SetUserUID] = useState("");
+    const [EncryptedUserEmail, SetEncryptedUserEmail] = useState("");
     
     //Room List/Creation Variables
     const [RoomCreationPopUp, setRoomCreatingPopUp] = useState(false);
@@ -64,7 +65,6 @@ export const MainPage = () => {
 
     const LeaveRoom = () => {
         console.log("Leave Room");
-        setUserInRoom(false);
         window.location.reload();
     }
     const EnterRoom = () => {
@@ -91,6 +91,7 @@ export const MainPage = () => {
                         const email = getUser.data().Email;
                         setUserName(name);
                         setUserAlreadyCreatedRoom(RoomCreated);
+                        SetEncryptedUserEmail(email);
                         const DecryptedEmail = DecryptEmail(email);
                         setUserEmail(DecryptedEmail);
                     } else {
@@ -312,7 +313,7 @@ export const MainPage = () => {
                 }
                 setInterval(GetMessagesRefresh, 200);
         }else{
-            if(userEmail == roomCreatedBy){
+            if(userEmail == DecryptEmail(roomCreatedBy)){
                 EnterRoom();
                 getMessages(roomName, roomID);
             }else{
@@ -460,7 +461,7 @@ export const MainPage = () => {
                             <>
                                 <div className='ChatTabHeader'>
                                     <h1>{CurrentActiveRoom}</h1>
-                                    {userEmail == PubPrivRoomCreatedBy ? (
+                                    {EncryptedUserEmail == PubPrivRoomCreatedBy ? (
                                         <>
                                             <div className='ChatTabHeaderButtons'>
                                                 <button onClick={UpdateRoomEnterFunc}><img src={trash} alt='delete'/></button>
