@@ -21,7 +21,7 @@ import { Timestamp } from 'firebase/firestore';
 import CryptoJS from 'crypto-js';
 
 const MIN_WIDTH = 700; // Set your minimum width threshold (e.g., 1024px)
-const MIN_HEIGHT = 700; // Set your minimum height threshold (e.g., 768px)
+const MIN_HEIGHT = 400; // Set your minimum height threshold (e.g., 768px)
 
 
 
@@ -541,7 +541,7 @@ export const MainPage = () => {
                     <h1>Access Denied</h1>
                     <h2>One of the two reasons:</h2>
                     <p>This website is only accessible on computers or laptops.</p>
-                    <p>This website is only accessible above a widht of 600 and height of 600</p>
+                    <p>This website is only accessible above a widht of 700 and height of 400</p>
                 </div>
             )}
         </div>
