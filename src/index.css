@@ -193,10 +193,10 @@ code {
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .RoomListInsideDivName{
   width: 100%;
-  align-self: flex-end;
 }
 .ActiveRoomsNoActive{
   display: flex;
@@ -356,7 +356,7 @@ code {
 .RoomCreationPopUp {
   background-color: #80AF81;
   width: 30%;
-  height: 30%;
+  height: 40%;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -379,6 +379,30 @@ code {
   font-size: 1.5em;
   border-top-right-radius: 16px;
 }
+.PrivateRoomPopUpHeader{
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 16px;
+  font-size: 1.5em;
+  border-top-right-radius: 16px;
+}
+.PrivateRoomPopUpEnterPass{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 70%;
+}
+.PrivateRoomPopUpHeader h2{
+  font-size: 1em;
+}
+.RoomCreationPopUpHeader h2{
+  font-size: 1em;
+}
 .RoomCreationPopUpHeader button{
   width: 30px;
   height: 30px;
@@ -390,7 +414,20 @@ code {
   background-color: #80AF81 ;
   border: none;
   position: absolute;
-  margin-left: 520px;
+  margin-left: 400px;
+}
+.PrivateRoomPopUpHeader button{
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1em;
+  border-radius: 5px;
+  background-color: #80AF81 ;
+  border: none;
+  position: absolute;
+  margin-left: 400px;
 }
 .RoomCreationPopUpHeader button:hover{
   background-color: rgb(209, 182, 147);
@@ -412,10 +449,18 @@ code {
   width: 100%; /* Make the children take full width */
 }
 
+.RoomCreationPopUpInput{
+  display: flex;
+  align-items: center;
+}
+.RoomCreationPopUpPasswordInput{
+  display: flex;
+  align-items: center;
+}
 .RoomCreationPopUpInput label, 
 .RoomCreationPopUpPasswordInput label {
   font-weight: bolder;
-  margin-bottom: 5px; /* Add space between label and input */
+  margin-right: 10px;
 }
 
 .RoomCreationPopUpInput input, 
@@ -425,6 +470,7 @@ code {
   border: none;
   border-radius: 6px;
   font-weight: bolder;
+  margin-top: 30px;
   letter-spacing: 1px;
 }
 
@@ -454,6 +500,17 @@ code {
   justify-content: center;
   align-items: center;
 }
+.PrivateRoomPopUpEnterPass button{
+  width: 100px;
+  height: 20%;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  border: none;
+  font-size: 1.2em;
+  font-weight: bolder;
+  background-color: #1A5319;
+  color: #D6EFD8;
+}
 .RoomCreationPopUpSubmitBtn button{
   width: 100px;
   height: 80%;
@@ -479,7 +536,7 @@ code {
 .PrivateRoomPopUp{
   background-color: rgb(184, 154, 115);
   width: 30%;
-  height: 20%;
+  height: 30%;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -492,13 +549,7 @@ code {
   border: 5px solid rgba(0, 0, 0, 0.212);
   border-radius: 16px
 }
-.PrivateRoomPopUpHeader{
-  transform: translateY(-35px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
+
 .exitPass{
   width: 30px;
   height: 30px;
@@ -523,14 +574,24 @@ code {
   border: none;
   border-radius: 8px;
 }
+.RoomCreationPopUp input{
+  transform: translateY(-15px);
+  width: 200px;
+  height: 20px;
+  padding: 3px;
+  border: none;
+  border-radius: 8px;
+}
 .submitPass{
   width: 100px;
-  height: 30px;
+  height: 20%;
+  margin-bottom: 20px;
   border-radius: 12px;
   border: none;
   font-size: 1.2em;
   font-weight: bolder;
-  background-color: rgb(219, 198, 169);
+  background-color: #3eca3b;
+  color: #D6EFD8;
 }
 .submitPass:hover{
   background-color: rgb(155, 141, 121);
@@ -664,4 +725,224 @@ code {
   transition: all 0.5s;
   margin-left: 10px;
 }
-
+@media (max-width: 1600px){
+  .LeaveRoomHeaderTab{
+    height: 51.5px;
+  }
+}
+@media (max-width: 1460px){
+  .RoomCreationPopUpHeader button{
+    margin-left: 350px;
+  }
+  .PrivateRoomPopUpHeader button{
+    margin-left: 300px;
+  }
+  .settingsusermail h2{
+    font-size: 1.3em;
+    word-break: break-all;
+  }
+}
+@media (max-width: 1300px) {
+  .RoomCreationPopUpHeader button{
+    margin-left: 250px;
+  }
+}
+@media (max-width: 1200px) {
+  .RoomsTabHeader h1{
+    font-size: 1.8em;
+    transition: all 0.5s ease;
+  }
+  .LeaveRoomHeaderTab h1{
+    font-size: 1.8em;
+    transition: all 0.5s ease;
+  }
+  .RoomListInsideDivName h2{
+    transition: all 0.5s ease;
+    font-size: 1.4em;
+  }
+  .settingsusermail h2{
+    font-size: 1.1em;
+    word-break: break-all;
+  }
+}
+@media (max-width: 1145px){
+  .SideTab {
+    gap: 87%;
+    transition: all 0.5s ease;
+  }
+  .SideTab button{
+    width: 30px;
+    height: 30px;
+    transition: all 0.5s ease;
+  }
+  .DeleteRoomBtn{
+    width: 120px;
+  }
+  .PrivateRoomPopUpHeader button{
+    margin-left: 250px;
+  }
+  .RoomCreationPopUp{
+    height: 50%;
+  }
+  .RoomCreationPopUpInput{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .RoomCreationPopUpPasswordInput{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+}
+@media (max-width: 950px) {
+  .RoomsTabHeader h1{
+    transition: all 0.5s ease;
+    font-size: 1.4em;
+  }
+  .LeaveRoomHeaderTab h1{
+    font-size: 1.4em;
+    transition: all 0.5s ease;
+  }
+  .RoomCreationPopUpHeader h2{
+    font-size: .9em;
+  }
+  .RoomCreationPopUpHeader button{
+    margin-left: 200px;
+  }
+  .PrivateRoomPopUpHeader button{
+    margin-left: 200px;
+  }
+  .PrivateRoomPopUpHeader h2{
+    font-size: .7em;
+  }
+  .ChatTabHeader h1{
+    font-size: 1.8em;
+  }
+  .ChatTabHeader p{
+    font-size: 1.2em;
+  }
+  .RoomListInsideDivName h2{
+    transition: all 0.5s ease;
+    font-size: 1em;
+    font-weight: bolder;
+  }
+  .RoomsTabHeaderSettings h1{
+    font-size: 1.8em;
+    transition: all 0.5s ease;
+  }
+  .settingsusername h2{
+    font-size: 1.3em;
+  }
+}
+@media (max-width: 845px){
+  .SideTab {
+    gap: 88.5%;
+    transition: all 0.5s ease;
+  }
+  .SideTab button{
+    width: 20px;
+    height: 20px;
+    transition: all 0.5s ease;
+  }
+  .SideTab button img{
+    transition: all 0.5s ease;
+    width: 25px;
+  }
+  .DeleteRoomBtn{
+    width: 100px;
+  }
+}
+@media (max-width: 740px) {
+  .RoomsTabHeader h1{
+    transition: all 0.5s ease;
+    font-size: 1em;
+  }
+  .LeaveRoomHeaderTab h1{
+    font-size: 1em;
+    transition: all 0.5s ease;
+  }
+  .RoomsTabHeader button{
+    transition: all 0.5s ease;
+    width: 20px;
+    height: 20px;
+  }
+  .DeleteRoomBtn{
+    width: 90px;
+  }
+  .RoomsTabHeader button img{
+    transition: all 0.5s ease;
+    width: 20px;
+  }
+  .LeaveRoomHeaderTab{
+    height: 57px;
+  }
+  .ChatTabHeader h1{
+    font-size: 1.3em;
+  }
+  .ChatTabHeader p{
+    font-size: 1em;
+  }
+}
+@media (max-width: 790px){
+  .RoomCreationPopUpHeader h2{
+    font-size: .7em;
+  }
+  .RoomCreationPopUpHeader button{
+    margin-left: 150px;
+  }
+  .TextMSG p{
+    font-size: .8em;
+  }
+  .PrivateRoomPopUpHeader button{
+    margin-left: 165px;
+  }
+  .PrivateRoomPopUpEnterPass input{
+    width: 170px;
+  }
+  .PrivateRoomPopUpHeader h2{
+    font-size: .6em;
+  }
+}
+@media (max-width: 695px){
+  .settingsusername h2{
+    font-size: 1em;
+  }
+  .settingsusermail h2{
+    font-size: 1em;
+    word-break: break-all;
+  }
+}
+@media (max-width: 605px){
+  .SideTab {
+    gap: 89.5%;
+    transition: all 0.5s ease;
+  }
+  .SideTab button{
+    width: 15px;
+    height: 15px;
+    transition: all 0.5s ease;
+  }
+  .SideTab button img{
+    transition: all 0.5s ease;
+    width: 20px;
+  }
+}
+@media (max-width: 650px) {
+  .RoomListInsideDivName h2{
+    transition: all 0.5s ease;
+    font-size: .8em;
+    font-weight: bolder;
+  }
+  .RoomListInsideDivIconDiv img{
+    width: 20px;
+  }
+  .LeaveRoomButtonSideTab{
+    font-size: .7em;
+  }
+  .DeleteRoomBtn{
+    width: 80px;
+  }
+}

@@ -1,8 +1,8 @@
 import { auth } from '../config/firebase-config';
 import { useState, useEffect } from 'react';
-import { getDoc, doc, getDocs, collection, deleteDoc,updateDoc,addDoc,docs } from 'firebase/firestore';
+import { getDoc, doc, getDocs, collection, deleteDoc,updateDoc,addDoc,docs, query, orderBy } from 'firebase/firestore';
 import { db } from '../config/firebase-config';
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import RoomCreationPopUpComponent from './RoomCreationPopUpComponent';
 import { useNavigate } from 'react-router-dom';
 import messagesquare from '../message-square.svg';
@@ -20,7 +20,7 @@ import logout from '../log-out.svg'
 import { Timestamp } from 'firebase/firestore';
 import CryptoJS from 'crypto-js';
 
-const MIN_WIDTH = 600; // Set your minimum width threshold (e.g., 1024px)
+const MIN_WIDTH = 700; // Set your minimum width threshold (e.g., 1024px)
 const MIN_HEIGHT = 700; // Set your minimum height threshold (e.g., 768px)
 
 
@@ -30,14 +30,19 @@ export const MainPage = () => {
     //SECRET_KEY 
     const SECRET_KEY = 'wf1-g2$G31-g2_3g2#!@RQ@FA2g#%#&#g34_h3_H43^%&_8665_75'
 
+    const [showAccessDenied, setShowAccessDenied] = useState(false);
+
     //Mobile
-    const isMobileDevice = () => {
-        const userAgent = /Mobi|Android/i.test(navigator.userAgent);
+    const isWidthHeightLow = () => {
         const screenWidth = window.innerWidth;
         const screenHeight = window.innerHeight;
       
         // Check if the user agent indicates a mobile device or if dimensions are below set thresholds
-        return userAgent && screenWidth < MIN_WIDTH || screenHeight < MIN_HEIGHT;
+        return screenWidth < MIN_WIDTH || screenHeight < MIN_HEIGHT;
+    };
+
+    const handleResize = () => {
+        setShowAccessDenied(isWidthHeightLow());
     };
 
     //User Variables
@@ -76,10 +81,7 @@ export const MainPage = () => {
     //Other Variables
     const [isLoading, setIsLoading] = useState(true);  // Add a loading state
     const navigate = useNavigate();
-
-
     const LeaveRoom = () => {
-        console.log("Leave Room");
         window.location.reload();
     }
     const EnterRoom = () => {
@@ -91,16 +93,21 @@ export const MainPage = () => {
     }
 
     useEffect(() => {
+      
+        handleResize();
 
+        window.addEventListener('resize', handleResize);
+        let isMounted = true; // Flag to track if component is mounted
+        let intervalId; // Define intervalId
+    
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
-                // User is signed in, proceed to get their data from Firestore
                 const userUID = user.uid;
                 SetUserUID(userUID);
                 try {
                     const docRef = doc(db, "Users", userUID);
                     const getUser = await getDoc(docRef);
-
+    
                     if (getUser.exists()) {
                         const name = getUser.data().Name;
                         const RoomCreated = getUser.data().RoomCreated;
@@ -116,6 +123,8 @@ export const MainPage = () => {
                 } catch (err) {
                     console.error("Error fetching document:", err);
                 }
+    
+                // Call your function to get room list and set loading state to false
                 const getRoomList = async () => {
                     try {
                         const data = await getDocs(RoomCollectionRef);
@@ -143,29 +152,39 @@ export const MainPage = () => {
                                 });
                             }
                         }));
-                        
-                
-                        setRoomList(filteredRoomsData);  // Set the state with the active rooms
-                
+                        // Your existing logic for filtering rooms
+                        if (isMounted) {
+                            setRoomList(filteredRoomsData);
+                        }
                     } catch (err) {
                         console.error('Error fetching or deleting rooms:', err);
                     }
                 };
-                
-                setInterval(getRoomList, 3000);
-                getRoomList();
+    
+                await getRoomList(); // Fetch rooms immediately
+    
+                // Set an interval for refreshing messages or other data
+                intervalId = setInterval(() => {
+                    // Your refresh logic here
+                }, 200); // Example interval duration
+    
             } else {
                 console.log("User not authenticated");
                 setUserName(""); // Clear username if not authenticated
             }
-            setIsLoading(false);  // Stop loading when auth state changes
+            if (isMounted) {
+                setIsLoading(false); // Stop loading when auth state changes
+            }
         });
-        setInterval(unsubscribe, 3000);
-
+    
         return () => {
-            unsubscribe();
-        } // Cleanup subscription on unmount
+            clearInterval(intervalId); // Clear interval on unmount
+            unsubscribe(); // Unsubscribe from auth state listener
+            window.removeEventListener('resize', handleResize);
+            isMounted = false; // Set flag to false when unmounted
+        };
     }, []);
+    
 
     if (isLoading) {
         return <h2>Loading...</h2>;  // Display loading indicator while checking auth state
@@ -205,11 +224,8 @@ export const MainPage = () => {
     //Enter Private Room
     const HandlePasswordSubmit = async (e) => {
         e.preventDefault();
-        console.log('Private Room');
 
         try{
-            console.log(RoomPassword);
-            console.log(PubPrivRoomPass);
             if(RoomPassword == PubPrivRoomPass){
                 EnterRoom();
                 getMessages(PubPrivRoomName, PubPrivRoomID);
@@ -235,7 +251,8 @@ export const MainPage = () => {
                     setRoomID(PrivroomID);
                     setCurrentActiveRoom(PrivroomName);
                     const messagesCollectionRef = collection(db, "Rooms", PrivroomID, "RoomMessages");
-                    const querySnapshot = await getDocs(messagesCollectionRef);
+                    const q = query(messagesCollectionRef, orderBy("timestamp", "asc"));
+                    const querySnapshot = await getDocs(q);
                     const FilteredMessagesFromRoom = querySnapshot.docs.map((doc) => ({
                         id: doc.id,
                         ...doc.data(),
@@ -264,7 +281,6 @@ export const MainPage = () => {
                 timestamp: new Date(),
             });
     
-            console.log('Message document written with ID: ', roomMessageRef.id);
         } catch (error) {
             console.error('Error adding message: ', error);
         }
@@ -277,7 +293,6 @@ export const MainPage = () => {
         const UserDocRef = doc(db, "Users", UserUID)
 
         try{
-            console.log("Deleted Room");
             const RoomDocRef = doc(db, "Rooms", PubPrivRoomID);
             await deleteDoc(RoomDocRef);
             await updateDoc(UserDocRef, {
@@ -295,9 +310,9 @@ export const MainPage = () => {
     const LogOutWithGoogle = async () => {
         try {
             await signOut(auth);
-            console.log("User logged out.");
             localStorage.removeItem("username");
             navigate('/');
+            window.location.reload();
         } catch (err) {
             console.error("Error during sign-out:", err);
         }
@@ -310,9 +325,7 @@ export const MainPage = () => {
         setPubPrivRoomPass(roomPass);
         setPubPrivRoomCreatedBy(roomCreatedBy);
 
-        console.log("roomExpiresAt:", roomExpiresAt);
         const formattedTimeExpiresAt = formatTimestamp(roomExpiresAt);
-        console.log("formattedTimeExpiresAt:", formattedTimeExpiresAt);
         setPubPrivRoomTimer(formattedTimeExpiresAt);
 
 
@@ -320,8 +333,8 @@ export const MainPage = () => {
                 const GetMessagesRefresh = async () => {
                     setCurrentActiveRoom(roomName);
                     const messagesCollectionRef = collection(db, "Rooms", roomID, "RoomMessages");
-                    const querySnapshot = await getDocs(messagesCollectionRef);
-                    
+                    const q = query(messagesCollectionRef, orderBy("timestamp", "asc"));
+                    const querySnapshot = await getDocs(q);
                     const FilteredMessagesFromRoom = querySnapshot.docs.map((doc) => ({
                         id: doc.id, // Include the document ID if needed
                         ...doc.data(), // Spread the document data (message content, timestamp, etc.)
@@ -335,7 +348,6 @@ export const MainPage = () => {
                 EnterRoom();
                 getMessages(roomName, roomID);
             }else{
-                console.log("Users dont match");
                 PrivateRoomEnterFunc();
             }
         }
@@ -344,7 +356,7 @@ export const MainPage = () => {
 
     return (
         <div className='MainBackground'>
-            {userName !== "" && !isMobileDevice() ? (
+            {userName !== "" && !showAccessDenied ? (
                 <>
                     {RoomCreationPopUp && !UserAlreadyCreatedRoom ? (
                         <div className='RoomCreationPopUpBG'>
@@ -364,8 +376,10 @@ export const MainPage = () => {
                                     <h2>Enter The Password</h2>
                                     <button className='exitPass' onClick={PrivateRoomEnterFunc}><img src={x} alt='cross'/></button>
                                 </div>
-                                <input type='text' placeholder='Pass' value={RoomPassword} onChange={(e) => SetRoomPassword(e.target.value)}/>
-                                <button className='submitPass' onClick={HandlePasswordSubmit}>Submit</button>
+                                <div className='PrivateRoomPopUpEnterPass'>
+                                    <input type='text' placeholder='Pass' value={RoomPassword} onChange={(e) => SetRoomPassword(e.target.value)}/>
+                                    <button className='submitPass' onClick={HandlePasswordSubmit}>Submit</button>
+                                </div>
                             </div> 
                         </div>
                     ) : null}
@@ -489,20 +503,21 @@ export const MainPage = () => {
                                         </>
                                     ): 
                                         <>
-                                            <p>Expires At: {PubPrivRoomTimer}</p>
-                                            <button onClick={LeaveRoom}><img src={logout} alt='exitRoom'/></button>
+                                            <div className='ChatTabHeaderButtons'>
+                                                <p>Expires At: {PubPrivRoomTimer}</p>
+                                                <button onClick={LeaveRoom}><img src={logout} alt='exitRoom'/></button>
+                                            </div>
                                         </>
                                     }
                                 </div>
                                 <div className='ChatTabMsgs'>
-                                    {MessageList.map((message) => (
-                                        <>
-                                            <div className='TextMSG'>
-                                                <p>{message.sentby}: {message.text}</p>
-                                            </div>
-                                        </>
-
-                                    ))}
+                                {MessageList
+                                .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)) // Sort by timestamp
+                                .map((message) => (
+                                    <div key={message.id} className='TextMSG'> {/* Ensure each message has a unique key */}
+                                        <p>{message.sentby}: {message.text}</p>
+                                    </div>
+                                ))}
                                 </div>
                                 <div className='ChatTabMsgsInput'>
                                     <input type='text' placeholder='your message' value={textMsg} onChange={(e) => setTextMsg(e.target.value)}/>
@@ -518,7 +533,7 @@ export const MainPage = () => {
                         )}
                     </div>
                 </>
-            ) : ( userName == "" && !isMobileDevice() ? (
+            ) : ( userName == "" && !showAccessDenied ? (
                 <h1>Please log in</h1>
             
             ): 
