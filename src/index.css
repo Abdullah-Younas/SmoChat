@@ -281,6 +281,12 @@ code {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 20px;
+}
+.ChatTabHeaderButtons p{
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #d6efd8d8;
 }
 .ChatTabMsgs{
   width:100%;
@@ -295,13 +301,6 @@ code {
   font-weight: bolder;
   word-break: break-all;
   margin-right: 14px;
-}
-.Timer{
-  position: absolute;
-  width: 50%;
-  height: 50%;
-  top: 120px;
-  right: -650px;
 }
 .ChatTabMsgsInput{
   background-color: #80AF81;
@@ -665,3 +664,4 @@ code {
   transition: all 0.5s;
   margin-left: 10px;
 }
+

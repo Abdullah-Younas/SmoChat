@@ -20,10 +20,25 @@ import logout from '../log-out.svg'
 import { Timestamp } from 'firebase/firestore';
 import CryptoJS from 'crypto-js';
 
+const MIN_WIDTH = 600; // Set your minimum width threshold (e.g., 1024px)
+const MIN_HEIGHT = 700; // Set your minimum height threshold (e.g., 768px)
+
+
+
 export const MainPage = () => {
 
     //SECRET_KEY 
     const SECRET_KEY = 'wf1-g2$G31-g2_3g2#!@RQ@FA2g#%#&#g34_h3_H43^%&_8665_75'
+
+    //Mobile
+    const isMobileDevice = () => {
+        const userAgent = /Mobi|Android/i.test(navigator.userAgent);
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+      
+        // Check if the user agent indicates a mobile device or if dimensions are below set thresholds
+        return userAgent && screenWidth < MIN_WIDTH || screenHeight < MIN_HEIGHT;
+    };
 
     //User Variables
     const [userName, setUserName] = useState("");
@@ -76,6 +91,7 @@ export const MainPage = () => {
     }
 
     useEffect(() => {
+
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
                 // User is signed in, proceed to get their data from Firestore
@@ -146,7 +162,9 @@ export const MainPage = () => {
         });
         setInterval(unsubscribe, 3000);
 
-        return () => unsubscribe(); // Cleanup subscription on unmount
+        return () => {
+            unsubscribe();
+        } // Cleanup subscription on unmount
     }, []);
 
     if (isLoading) {
@@ -326,7 +344,7 @@ export const MainPage = () => {
 
     return (
         <div className='MainBackground'>
-            {userName !== "" ? (
+            {userName !== "" && !isMobileDevice() ? (
                 <>
                     {RoomCreationPopUp && !UserAlreadyCreatedRoom ? (
                         <div className='RoomCreationPopUpBG'>
@@ -464,12 +482,16 @@ export const MainPage = () => {
                                     {EncryptedUserEmail == PubPrivRoomCreatedBy ? (
                                         <>
                                             <div className='ChatTabHeaderButtons'>
+                                                <p>Expires At: {PubPrivRoomTimer}</p>
                                                 <button onClick={UpdateRoomEnterFunc}><img src={trash} alt='delete'/></button>
                                                 <button onClick={LeaveRoom}><img src={logout} alt='leaveRoom'/></button>
                                             </div>
                                         </>
                                     ): 
-                                        <button onClick={LeaveRoom}><img src={logout} alt='exitRoom'/></button>
+                                        <>
+                                            <p>Expires At: {PubPrivRoomTimer}</p>
+                                            <button onClick={LeaveRoom}><img src={logout} alt='exitRoom'/></button>
+                                        </>
                                     }
                                 </div>
                                 <div className='ChatTabMsgs'>
@@ -481,9 +503,6 @@ export const MainPage = () => {
                                         </>
 
                                     ))}
-                                            <div className='Timer'>
-                                                <p>Expires At: {PubPrivRoomTimer}</p>
-                                            </div>
                                 </div>
                                 <div className='ChatTabMsgsInput'>
                                     <input type='text' placeholder='your message' value={textMsg} onChange={(e) => setTextMsg(e.target.value)}/>
@@ -499,8 +518,16 @@ export const MainPage = () => {
                         )}
                     </div>
                 </>
-            ) : (
+            ) : ( userName == "" && !isMobileDevice() ? (
                 <h1>Please log in</h1>
+            
+            ): 
+                <div>
+                    <h1>Access Denied</h1>
+                    <h2>One of the two reasons:</h2>
+                    <p>This website is only accessible on computers or laptops.</p>
+                    <p>This website is only accessible above a widht of 600 and height of 600</p>
+                </div>
             )}
         </div>
     );
