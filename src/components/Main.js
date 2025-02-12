@@ -28,7 +28,7 @@ const MIN_HEIGHT = 400; // Set your minimum height threshold (e.g., 768px)
 export const MainPage = () => {
 
     //SECRET_KEY 
-    const SECRET_KEY = 'wf1-g2$G31-g2_3g2#!@RQ@FA2g#%#&#g34_h3_H43^%&_8665_75'
+    const SECRET_KEY = process.env.REACT_APP_SECRET_KEY;
 
     const [showAccessDenied, setShowAccessDenied] = useState(false);
 

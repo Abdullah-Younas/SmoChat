@@ -9,7 +9,7 @@ import CryptoJS from 'crypto-js';
 export const Auth = () => {
     const [Username, setUsername] = useState("");
 
-    const SECRET_KEY = 'wf1-g2$G31-g2_3g2#!@RQ@FA2g#%#&#g34_h3_H43^%&_8665_75'
+    const SECRET_KEY = process.env.REACT_APP_SECRET_KEY;
 
     const navigate = useNavigate();
 
