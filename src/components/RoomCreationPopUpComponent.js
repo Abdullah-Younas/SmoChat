@@ -82,10 +82,7 @@ export const RoomCreationPopUpComponent = () => {
                 sentby: userName,
                 timestamp: new Date(),
             });
-          
-            console.log('Room document written with ID: ', roomDocRef.id);  // This will log the random ID
-            console.log('Message document written with ID: ', roomMessageRef.id);
-    
+              
             // 3. Update the user's document to add the created room ID
             const userUID = auth.currentUser.uid; // Get the current user's UID
             const userDocRef = doc(db, "Users", userUID); // Reference to the user's document
@@ -94,7 +91,6 @@ export const RoomCreationPopUpComponent = () => {
                 RoomCreated: true// Update RoomCreated with the new room ID
             });
     
-            console.log("User's RoomCreated updated with ID: ", roomDocRef.id);
           
             window.location.reload();
 
