@@ -280,6 +280,8 @@ export const MainPage = () => {
                 sentby: userName,
                 timestamp: new Date(),
             });
+
+            setTextMsg("");
     
         } catch (error) {
             console.error('Error adding message: ', error);
