@@ -313,7 +313,7 @@ export const MainPage = () => {
         try {
             await signOut(auth);
             localStorage.removeItem("username");
-            navigate('/');
+            navigate('/auth');
             window.location.reload();
         } catch (err) {
             console.error("Error during sign-out:", err);

@@ -1,6 +1,6 @@
-import './App.css';
 import { Auth } from './components/Auth';
 import {MainPage} from './components/Main';
+import {Land} from './components/Land';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -8,7 +8,8 @@ function App() {
     <div className='Background'>
       <Router>
         <Routes>
-          <Route path='/' element={<Auth />} />
+          <Route path='/' element={<Land/>} />
+          <Route path='/auth' element={<Auth />} />
           <Route path='/success' element={<MainPage/>} />
         </Routes>
       </Router>
