@@ -39,6 +39,9 @@ export const Land = () => {
     <div className="landing-container">
       <div className="hero-section">
         <h1 className="hero-title">Smochat</h1>
+        <button className="cta-button" onClick={GoToAuth}>
+          Launch Chat App
+        </button>
         <p className="hero-subtitle">
           A real-time, modern group chat app built with <strong>React.js</strong> and <strong>Firebase</strong> — designed for seamless communication.
         </p>
